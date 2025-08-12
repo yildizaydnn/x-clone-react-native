@@ -1,26 +1,28 @@
 import mongoose from "mongoose";
 
-const commentSchema = new mongoose.Schema(
+const postSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    post: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-      required: true,
-    },
     content: {
       type: String,
-      required: true,
       maxLength: 280,
     },
-    likes: [
+    image: {
+      type: String,
+      default: "",
+    },
+    likes: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Comment",
       },
     ],
   },
@@ -28,6 +30,6 @@ const commentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Comment = mongoose.model("Comment", commentSchema);
+const User = mongoose.model("Post", postSchema);
 
-export default Comment;
+export default Post;
